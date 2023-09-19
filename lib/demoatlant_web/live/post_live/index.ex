@@ -6,7 +6,10 @@ defmodule DemoatlantWeb.PostLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
+        if connected?(socket), do: Timeline.subscribe()
+
     {:ok, assign(socket, :posts, list_posts())}
+
   end
 
   @impl true
@@ -32,13 +35,31 @@ defmodule DemoatlantWeb.PostLive.Index do
     |> assign(:post, nil)
   end
 
-  @impl true
+    @impl true
   def handle_event("delete", %{"id" => id}, socket) do
     post = Timeline.get_post!(id)
     {:ok, _} = Timeline.delete_post(post)
 
     {:noreply, assign(socket, :posts, list_posts())}
   end
+
+   @impl true
+    def handle_info({:post_created, post}, socket) do
+
+      {:noreply, update(socket, :posts, fn posts -> [post | posts] end)}
+    end
+
+    @impl true
+    def handle_info({:post_updated, _post}, socket) do
+
+      {:noreply, update(socket, :posts, fn _posts -> list_posts() end)}
+    end
+
+    @impl true
+    def handle_info({:post_deleted, _}, socket) do
+
+      {:noreply,  update(socket, :posts, fn _posts -> list_posts() end )}
+    end
 
   defp list_posts do
     Timeline.list_posts()

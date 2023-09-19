@@ -18,7 +18,7 @@
   <span><%= live_patch "New Post", to: Routes.post_index_path(@socket, :new) %></span>
 </div>
 
-<div id="posts" phx-update="prepend">
+<div id="posts" >
   <%= for post <- @posts do %>
 
      <%= live_component DemoatlantWeb.PostLive.PostComponent, id: post.id, post: post %>
