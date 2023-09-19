@@ -101,4 +101,19 @@ defmodule Demoatlant.Timeline do
   def change_post(%Post{} = post, attrs \\ %{}) do
     Post.changeset(post, attrs)
   end
+
+
+    def inc_likes(%Post{id: id}) do
+      from(post in Post, where: post.id == ^id, select: post)
+      |> Repo.update_all(inc: [likes_count: 1])
+
+  end
+
+  def inc_reposts(%Post{id: id}) do
+      from(post in Post, where: post.id == ^id, select: post)
+      |> Repo.update_all(inc: [repost_count: 1])
+
+  end
+
+
 end
