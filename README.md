@@ -2,6 +2,8 @@
 Repository for atlantica conf 2023 demo
 
 
+Deployed version at [`https://demo-atlant.gigalixirapp.com/posts`](https://demo-atlant.gigalixirapp.com/posts) from your browser.
+
 
 Checkout every commit to see the changes and evolution of the program
 
